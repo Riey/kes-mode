@@ -45,7 +45,7 @@
     (modify-syntax-entry ?{  "(} \\}")
 
     ;; Brackets
-    ;; (modify-syntax-entry ?{  "(}" st)
+    (modify-syntax-entry ?{  "(}" st)
     (modify-syntax-entry ?}  "){" st)
     (modify-syntax-entry ?\(  "()" st)
     (modify-syntax-entry ?\)  ")(" st)
