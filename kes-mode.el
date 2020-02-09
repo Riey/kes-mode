@@ -17,13 +17,14 @@
   `(
     (,(regexp-opt kes-keywords  'symbols) . font-lock-keyword-face)
     (,(rx (in "ㄱ-ㅎㅏ-ㅣ가-힣_") (* (in "0-9ㄱ-ㅎㅏ-ㅣ가-힣_"))) (0 font-lock-builtin-face))
-    (,(regexp-opt kes-operators) . 'kes-operator-face)
+    (,(regexp-opt kes-operators 'words) . 'kes-operator-face)
     (,(rx "$" (+ (in "0-9ㄱ-ㅎㅏ-ㅣ가-힣_"))) (0 font-lock-variable-name-face))))
 
 (defvar kes-mode-syntax-table
   (let ((st (make-syntax-table)))
 
     (modify-syntax-entry ?/  "." st)
+    (modify-syntax-entry ?\  "." st)
     (modify-syntax-entry ?&  "." st)
     (modify-syntax-entry ?|  "." st)
     (modify-syntax-entry ?^  "." st)
