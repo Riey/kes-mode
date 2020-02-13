@@ -8,7 +8,7 @@
   :group 'kes-mode)
 
 (defconst kes-keywords
-  '("그외" "선택"))
+  '("그외" "선택" "종료" "반복"))
 
 (defconst kes-operators
   '("/" "&" "|" "\\^" "*" "+" "%" "-" "<" ">" "#" "@" "[" "]" "?"))
@@ -16,9 +16,9 @@
 (defconst kes-font-lock-keywords
   `(
     (,(regexp-opt kes-keywords  'symbols) . font-lock-keyword-face)
-    (,(rx (in "ㄱ-ㅎㅏ-ㅣ가-힣_") (* (in "0-9ㄱ-ㅎㅏ-ㅣ가-힣_"))) (0 font-lock-builtin-face))
+    (,(rx (in "a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣_") (* (in "0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣_"))) (0 font-lock-builtin-face))
     (,(regexp-opt kes-operators 'words) . 'kes-operator-face)
-    (,(rx "$" (+ (in "0-9ㄱ-ㅎㅏ-ㅣ가-힣_"))) (0 font-lock-variable-name-face))))
+    (,(rx "$" (+ (in "0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣_"))) (0 font-lock-variable-name-face))))
 
 (defvar kes-mode-syntax-table
   (let ((st (make-syntax-table)))
@@ -37,6 +37,7 @@
     (modify-syntax-entry ?<  "." st)
     (modify-syntax-entry ?>  "." st)
     (modify-syntax-entry ?\?  "." st)
+    (modify-syntax-entry ?\"  "." st)
 
     ;; Comment
     (modify-syntax-entry ?/  ". 124b" st)
@@ -60,7 +61,9 @@
   :syntax-table kes-mode-syntax-table
 
   (setq-local font-lock-defaults '(kes-font-lock-keywords))
-  (setq-local comment-start-skip "\\(?://[/!]*\\|/\\*[*!]?\\)[[:space:]]*")
+  (setq-local comment-use-syntax t)
+  (setq-local comment-start ";")
+  (setq-local comment-end "")
   (setq-local comment-multi-line nil)
   (setq-local electric-indent-mode t)
   (setq-local electric-indent-chars (list ?\n ?}))
