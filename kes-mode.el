@@ -8,7 +8,7 @@
   :group 'kes-mode)
 
 (defconst kes-keywords
-  '("그외" "선택" "종료" "반복"))
+  '("그외" "선택" "종료" "반복" "만약" "혹은"))
 
 (defconst kes-operators
   '("/" "&" "|" "\\^" "*" "+" "%" "-" "<" ">" "#" "@" "[" "]" "?"))
@@ -16,6 +16,7 @@
 (defconst kes-font-lock-keywords
   `(
     (,(regexp-opt kes-keywords  'symbols) . font-lock-keyword-face)
+    (,(rx (group (in "a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣_") (* (in "0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣_"))) "(") (1 font-lock-function-name-face))
     (,(rx (in "a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣_") (* (in "0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣_"))) (0 font-lock-builtin-face))
     (,(regexp-opt kes-operators 'words) . 'kes-operator-face)
     (,(rx "$" (+ (in "0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣_"))) (0 font-lock-variable-name-face))))
@@ -40,8 +41,8 @@
     (modify-syntax-entry ?\"  "." st)
 
     ;; Comment
-    (modify-syntax-entry ?/  ". 124b" st)
-    (modify-syntax-entry ?\n "> b"    st)
+    (modify-syntax-entry ?\; "<" st)
+    (modify-syntax-entry ?\n ">" st)
 
     ;; String quote
     (modify-syntax-entry ?'  "\"'" st)
@@ -63,10 +64,7 @@
   (setq-local font-lock-defaults '(kes-font-lock-keywords))
   (setq-local comment-use-syntax t)
   (setq-local comment-start ";")
-  (setq-local comment-end "")
   (setq-local comment-multi-line nil)
-  (setq-local electric-indent-mode t)
-  (setq-local electric-indent-chars (list ?\n ?}))
   (setq-local tab-width 4)
   (defvaralias 'c-basic-offset 'tab-width)
   (defvaralias 'cperl-indent-level 'tab-width))
