@@ -2,23 +2,19 @@
 
 (defvar kes-mode-hook nil)
 
-(defface kes-operator-face
-  '((t :weight bold :inherit font-lock-highlighting-faces))
-  "Face for operator"
-  :group 'kes-mode)
-
 (defconst kes-keywords
   '("그외" "선택" "종료" "반복" "만약" "혹은"))
 
 (defconst kes-operators
-  '("/" "&" "|" "\\^" "*" "+" "%" "-" "<" ">" "#" "@" "[" "]" "?"))
+  '("/" "&" "|" "\\^" "*" "+" "%" "-" "~" "<" ">" "=" "~=" "<=" ">=" "#" "@" "[+]" "[-]" "[?]" "[!]"))
 
 (defconst kes-font-lock-keywords
   `(
     (,(regexp-opt kes-keywords  'symbols) . font-lock-keyword-face)
-    (,(rx (group (in "a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣_") (* (in "0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣_"))) "(") (1 font-lock-function-name-face))
+    (,(rx (group (in "a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣_") (* (in "0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣_"))) (* whitespace) "(") (1 font-lock-function-name-face))
     (,(rx (in "a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣_") (* (in "0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣_"))) (0 font-lock-builtin-face))
-    (,(regexp-opt kes-operators 'words) . 'kes-operator-face)
+    (,(regexp-opt kes-operators 'words) . font-lock-warning-face)
+    (,(rx "[" (group "$" (+ (in "0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣_"))) "]") (0 font-lock-warning-face) (1 font-lock-variable-name-face))
     (,(rx "$" (+ (in "0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣_"))) (0 font-lock-variable-name-face))))
 
 (defvar kes-mode-syntax-table
@@ -31,6 +27,7 @@
     (modify-syntax-entry ?^  "." st)
     (modify-syntax-entry ?*  "." st)
     (modify-syntax-entry ?+  "." st)
+    (modify-syntax-entry ?~  "." st)
     (modify-syntax-entry ?=  "." st)
     (modify-syntax-entry ?%  "." st)
     (modify-syntax-entry ?@  "." st)
@@ -50,8 +47,10 @@
     ;; Brackets
     (modify-syntax-entry ?{  "(}" st)
     (modify-syntax-entry ?}  "){" st)
-    (modify-syntax-entry ?\[  "(]" st)
-    (modify-syntax-entry ?\]  ")[" st)
+    (modify-syntax-entry ?\[ "(]" st)
+    (modify-syntax-entry ?\] ")[" st)
+    (modify-syntax-entry ?\( "()" st)
+    (modify-syntax-entry ?\) ")(" st)
 
     st))
 
