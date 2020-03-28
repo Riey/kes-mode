@@ -55,15 +55,10 @@
         (setq indent (- indent kes-indent-offset))))
     (indent-line-to indent)))
 
-(defun kes-newline-and-indent ()
-  (interactive)
-  (insert "\n")
-  (kes-indent-line))
-
 (defvar kes-mode-map nil)
 (setq kes-mode-map
       (let ((map (make-sparse-keymap)))
-        (define-key map (kbd "RET") 'kes-newline-and-indent)
+        (define-key map (kbd "RET") 'newline-and-indent)
         map))
 
 (define-derived-mode kes-mode prog-mode "KES"
