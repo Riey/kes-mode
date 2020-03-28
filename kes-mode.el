@@ -11,7 +11,7 @@
 (defconst kes-font-lock-keywords
   `(
     (,(regexp-opt kes-keywords  'symbols) . font-lock-keyword-face)
-    (,(rx (group (in "a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣_") (* (in "0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣_"))) (* whitespace) "(") (1 font-lock-function-name-face))
+    (,(rx (group (in "a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣_") (* (in "0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣_"))) (* (in " \r\n\t")) "(") (1 font-lock-function-name-face))
     (,(rx (in "a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣_") (* (in "0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣_"))) (0 font-lock-builtin-face))
     (,(regexp-opt kes-operators 'words) . font-lock-warning-face)
     (,(rx "[" (group "$" (+ (in "0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣_"))) "]") (0 font-lock-warning-face) (1 font-lock-variable-name-face))
