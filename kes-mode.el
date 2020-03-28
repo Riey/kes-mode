@@ -45,7 +45,7 @@
       (beginning-of-line)
       (condition-case nil
           (while t
-            (backward-up-list 1)
+            (backward-up-list)
             (when (looking-at "[{(]")
               (setq indent (+ indent kes-indent-offset))))
         (error nil)))
@@ -54,6 +54,17 @@
       (when (and (looking-at "[})]") (>= indent kes-indent-offset))
         (setq indent (- indent kes-indent-offset))))
     (indent-line-to indent)))
+
+(defun kes-newline-and-indent ()
+  (interactive)
+  (insert "\n")
+  (kes-indent-line))
+
+(defvar kes-mode-map nil)
+(setq kes-mode-map
+      (let ((map (make-sparse-keymap)))
+        (define-key map (kbd "RET") 'kes-newline-and-indent)
+        map))
 
 (define-derived-mode kes-mode prog-mode "KES"
   "Major mode for kes Korean Era Script"
